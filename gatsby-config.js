@@ -1,7 +1,20 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "B[arry]log",
+    title: `B[arry]log`,
+    author: `Hải Đào (barrydevp)`,
+    description: `Just my blogs :)`,
+    birthday: `2000-01-29`,
+    siteUrl: `https://barrydevp-blog.netlify.com/`,
+    socials: [
+      {
+        name: `facebook`,
+        link: `https://www.facebook.com/profile.php?id=100009731830079`
+      },
+      {
+        name: `github`,
+        link: `https://github.com/barrydevp`
+      }
+    ],
   },
   plugins: [
     "gatsby-plugin-sass",
@@ -11,17 +24,45 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        name: `Barry Blog`,
+        short_name: `b[arry]log`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#005bff`,
+        display: `minimal-ui`,
+        icon: "content/assets/shoutrrr-logotype.png",
       },
     },
-    "gatsby-plugin-mdx",
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: `gatsby-remark-responsive-iframe`,
+            options: {
+              wrapperStyle: `margin-bottom: 1.0725rem`,
+            },
+          },
+          `gatsby-remark-prismjs`,
+          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-smartypants`,
+        ],
+      },
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "images",
-        path: "./src/images/",
+        path: "./content/assets/",
       },
       __key: "images",
     },
@@ -33,5 +74,14 @@ module.exports = {
       },
       __key: "pages",
     },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "posts",
+        path: "./content/posts/",
+      },
+      __key: "posts",
+    },
+    'gatsby-plugin-postcss'
   ],
 };
