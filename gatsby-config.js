@@ -13,6 +13,10 @@ module.exports = {
       {
         name: `github`,
         link: `https://github.com/barrydevp`
+      },
+      {
+        name: `linkedin`,
+        link: `https://www.linkedin.com/in/hai-dao-6569a71b3`
       }
     ],
   },

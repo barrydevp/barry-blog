@@ -5,12 +5,14 @@ import Image from 'gatsby-image';
 
 import {
   FacebookFilled,
-  GithubFilled
+  GithubFilled,
+  LinkedinFilled
 } from '@ant-design/icons';
 
 const SOCIAL_ICON_MAP = {
   facebook: FacebookFilled,
   github: GithubFilled,
+  linkedin: LinkedinFilled
 };
 
 const AuthorDescription = ({ siteMetaData }) => {
@@ -31,7 +33,7 @@ const SocialDetail = ({ siteMetaData }) => {
   const displaySocial = useMemo(() => (
     socials.map((social) => {
       const SocialIcon = SOCIAL_ICON_MAP[social.name];
-      const _social = Object.assign({ icon: <SocialIcon/> }, social);
+      const _social = Object.assign({ icon: <SocialIcon style={{ fontSize: '20px' }}/> }, social);
 
       return (
         <Social social={_social}/>
@@ -101,7 +103,7 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <div className="ml-4">
+      <div className="ml-2 md:ml-4">
         <AuthorDescription siteMetaData={siteMetadata}/>
         <SocialDetail siteMetaData={siteMetadata}/>
       </div>
