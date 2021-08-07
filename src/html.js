@@ -17,7 +17,7 @@ export default function HTML(props) {
         />
         {props.headComponents}
       </head>
-      <body {...props.bodyAttributes}>
+      <body className="text-gray-900 dark:text-white dark:bg-gray-900 font-mono" {...props.bodyAttributes}>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -26,7 +26,7 @@ export default function HTML(props) {
                 function setTheme(newTheme) {
                   window.__theme = newTheme;
                   preferredTheme = newTheme;
-                  document.body.className = newTheme;
+                  // document.body.className = newTheme;
                   window.__onThemeChange(newTheme);
                 }
 

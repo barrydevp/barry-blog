@@ -4,9 +4,9 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { formatReadingTime } from '../utils/helpers';
 
-import Bio from '../components/bio';
-import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Bio from '../components/Bio/bio';
+import Layout from '../components/Layout/layout';
+import SEO from '../components/Seo/seo';
 
 class BlogIndex extends React.Component {
   render() {
