@@ -1,20 +1,120 @@
-module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: 'media', // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    // ...defaultVariant,
-    extend: {
-      backgroundColor: ['checked'],
-      borderColor: ['checked'],
-      inset: ['checked']
+const typographyExtend = (theme) => {
+  const colorLevels = [100, 200, 400, 500];
+
+  const _darkMode = {
+    css: [
+      {
+        color: theme('colors.white'),
+        '[class~="lead"]': {
+          color: theme('colors.white'),
+        },
+        a: {
+          color: theme('colors.blue.300'),
+        },
+        strong: {
+          color: theme('colors.blue.300'),
+        },
+        'ol > li::before': {
+          color: theme('colors.blue.200'),
+        },
+        'ul > li::before': {
+          backgroundColor: theme('colors.blue.100'),
+        },
+        hr: {
+          borderColor: theme('colors.blue.50'),
+        },
+        blockquote: {
+          color: theme('colors.blue.300'),
+          borderLeftColor: theme('colors.blue.50'),
+        },
+        h1: {
+          color: theme('colors.blue.300'),
+        },
+        h2: {
+          color: theme('colors.blue.300'),
+        },
+        h3: {
+          color: theme('colors.blue.300'),
+        },
+        h4: {
+          color: theme('colors.blue.300'),
+        },
+        'figure figcaption': {
+          color: theme('colors.blue.200'),
+        },
+        code: {
+          color: theme('colors.blue.300'),
+        },
+        'a code': {
+          color: theme('colors.blue.300'),
+        },
+        pre: {
+          color: theme('colors.blue.50'),
+          backgroundColor: theme('colors.blue.300'),
+        },
+        thead: {
+          color: theme('colors.blue.300'),
+          borderBottomColor: theme('colors.blue.100'),
+        },
+        'tbody tr': {
+          borderBottomColor: theme('colors.blue.50'),
+        },
+      },
+    ],
+  };
+
+  const _base = {
+    DEFAULT: {
+      css: [
+        {
+          h3: {
+            a: {
+              fontWeight: '700'
+            }
+          }
+        }
+      ]
     },
-  },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+    white: {
+      css: [
+        {
+          color: theme('colors.white'),
+          code: { color: theme('colors.white') },
+        },
+      ],
+    },
+    dark: _darkMode,
+  };
+
+  // const colors = Object.entries(theme('colors')).reduce((reduced, [color, values]) => {
+  //   const _colors = colorLevels.reduce((acc, level) => {
+  //     if (!values[level]) {
+  //       return acc;
+  //     }
+  //
+  //     return {
+  //       ...acc,
+  //       [`${color}-${level}`]: {
+  //         css: [
+  //           {
+  //             color: values[level],
+  //             code: { color: values[level] },
+  //           },
+  //         ],
+  //       },
+  //     };
+  //   }, {});
+  //
+  //   return {
+  //     ...reduced,
+  //     ..._colors,
+  //   };
+  // }, {});
+
+  return {
+    ..._base,
+    // ...colors
+  };
 };
 
 /** if has custom in tailwind default variant, we need uncomment the line 11 */
@@ -162,4 +262,26 @@ const defaultVariant = {
   width: ['responsive'],
   wordBreak: ['responsive'],
   zIndex: ['responsive', 'focus-within', 'focus']
+};
+
+module.exports = {
+  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'media', // or 'media' or 'class'
+  theme: {
+    extend: {
+      typography: typographyExtend,
+    },
+  },
+  variants: {
+    // ...defaultVariant,
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+      inset: ['checked'],
+      typography: ['dark'],
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };

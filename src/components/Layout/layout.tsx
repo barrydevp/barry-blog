@@ -80,8 +80,6 @@ const Layout = ({ title, children, location }: LayoutProps) => {
     };
   }, []);
 
-  let header;
-
 
   return (
     <div className={styles.base}>

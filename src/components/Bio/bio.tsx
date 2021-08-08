@@ -91,7 +91,7 @@ const Bio = () => {
   const { author } = siteMetadata;
 
   return (
-    <div className="flex">
+    <div className="flex mb-12">
       <Image
         fixed={data.avatar.childImageSharp.fixed}
         alt={author}

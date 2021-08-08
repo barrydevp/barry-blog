@@ -1,4 +1,4 @@
-export function formatReadingTime(minutes) {
+export const formatReadingTime = (minutes: number): string => {
   let cups = Math.round(minutes / 5);
   // let bowls = 0;
   if (cups > 5) {
@@ -8,10 +8,10 @@ export function formatReadingTime(minutes) {
   } else {
     return `${new Array(cups || 1).fill('☕️').join('')} ${minutes} min read`;
   }
-}
+};
 
 // `lang` is optional and will default to the current user agent locale
-export function formatPostDate(date, lang) {
+export const formatPostDate = (date, lang): string => {
   if (typeof Date.prototype.toLocaleDateString !== 'function') {
     return date;
   }
@@ -22,4 +22,4 @@ export function formatPostDate(date, lang) {
     { day: 'numeric', month: 'long', year: 'numeric' },
   ].filter(Boolean);
   return date.toLocaleDateString(...args);
-}
+};

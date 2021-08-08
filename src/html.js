@@ -1,26 +1,22 @@
-import React from "react"
-import PropTypes from "prop-types"
-
-// import './styles/_base.scss';
-// import 'antd/dist/antd.css';
-// import './styles/global.css';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function HTML(props) {
   return (
     <html {...props.htmlAttributes}>
-      <head>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        {props.headComponents}
-      </head>
-      <body className="text-gray-900 dark:text-white dark:bg-gray-900 font-mono" {...props.bodyAttributes}>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+    <head>
+      <meta charSet="utf-8"/>
+      <meta httpEquiv="x-ua-compatible" content="ie=edge"/>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+      {props.headComponents}
+    </head>
+    <body className="text-gray-900 dark:text-white dark:bg-gray-900 font-mono" {...props.bodyAttributes}>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
               (function() {
                 window.__onThemeChange = function() {};
                 function setTheme(newTheme) {
@@ -50,21 +46,21 @@ export default function HTML(props) {
                 setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
               })();
             `,
-          }}
-        />
-        {props.preBodyComponents}
-        <noscript key="noscript" id="gatsby-noscript">
-          This app works best with JavaScript enabled.
-        </noscript>
-        <div
-          key={`body`}
-          id="___gatsby"
-          dangerouslySetInnerHTML={{ __html: props.body }}
-        />
-        {props.postBodyComponents}
-      </body>
+      }}
+    />
+    {props.preBodyComponents}
+    <noscript key="noscript" id="gatsby-noscript">
+      This app works best with JavaScript enabled.
+    </noscript>
+    <div
+      key={`body`}
+      id="___gatsby"
+      dangerouslySetInnerHTML={{ __html: props.body }}
+    />
+    {props.postBodyComponents}
+    </body>
     </html>
-  )
+  );
 }
 
 HTML.propTypes = {
@@ -74,4 +70,4 @@ HTML.propTypes = {
   preBodyComponents: PropTypes.array,
   body: PropTypes.string,
   postBodyComponents: PropTypes.array,
-}
+};
