@@ -22,7 +22,7 @@ export default function HTML(props) {
                 function setTheme(newTheme) {
                   window.__theme = newTheme;
                   preferredTheme = newTheme;
-                  // document.body.className = newTheme;
+                  document.body.className = "text-gray-900 dark:text-white dark:bg-gray-900 font-mono " + newTheme;
                   window.__onThemeChange(newTheme);
                 }
 

@@ -42,15 +42,19 @@ const typographyExtend = (theme) => {
         'figure figcaption': {
           color: theme('colors.blue.200'),
         },
+        ':not(pre) > code[class*="language-"], pre[class*="language-"]': {
+          color: '#c9d1d9',
+          backgroundColor: '#0d1117',
+        },
         code: {
-          color: theme('colors.blue.300'),
+          color: '#c9d1d9',
         },
         'a code': {
-          color: theme('colors.blue.300'),
+          color: '#c9d1d9',
         },
         pre: {
-          color: theme('colors.blue.50'),
-          backgroundColor: theme('colors.blue.300'),
+          color: '#c9d1d9',
+          backgroundColor: '#0d1117',
         },
         thead: {
           color: theme('colors.blue.300'),
@@ -72,7 +76,36 @@ const typographyExtend = (theme) => {
             a: {
               fontWeight: '700'
             }
-          }
+          },
+          ':not(pre) > code[class*="language-"], pre[class*="language-"]': {
+            color: '#c9d1d9',
+            backgroundColor: '#0d1117',
+          },
+          '.prose code': {
+            color: '#c9d1d9',
+          },
+          '.prose a code': {
+            color: '#c9d1d9',
+          },
+          '.prose pre': {
+            color: '#c9d1d9',
+            backgroundColor: '#0d1117',
+          },
+          '.token.atrule, .token.attr-value, .token.keyword': {
+            color: '#ff7b72'
+          },
+          '.token.punctuation, .token.parameter': {
+            color: '#c9d1d9',
+          },
+          '.token.operator': {
+            color: '#79c0ff'
+          },
+          '.token.function': {
+            color: '#d2a8ff'
+          },
+          '.token.class-name': {
+            color: '#ffa657'
+          },
         }
       ]
     },
@@ -267,7 +300,7 @@ const defaultVariant = {
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: 'media', // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       typography: typographyExtend,

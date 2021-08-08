@@ -23,3 +23,7 @@ export const formatPostDate = (date, lang): string => {
   ].filter(Boolean);
   return date.toLocaleDateString(...args);
 };
+
+export const normalizeSlug = (slug: string): string => {
+  return `/${slug.slice(0, -1)}`
+}

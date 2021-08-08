@@ -5,6 +5,11 @@ module.exports = {
     description: `Just my blogs :)`,
     birthday: `2000-01-29`,
     siteUrl: `https://barrydevp-blog.netlify.com/`,
+    blogAuthor: {
+      name: 'Hai Dao',
+      tagging: 'barrydevp',
+      link: 'https://www.facebook.com/profile.php?id=100009731830079'
+    },
     socials: [
       {
         name: `facebook`,

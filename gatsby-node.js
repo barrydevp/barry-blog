@@ -1,98 +1,101 @@
 const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
-// exports.createPages = async ({ graphql, actions, reporter }) => {
-//   const { createPage } = actions;
-//
-//   // Define a template for blog post
-//   const blogPost = path.resolve(`./src/templates/blog-post.js`);
-//
-//   // Get all markdown blog posts sorted by date
-//   const result = await graphql(
-//     `
-//       {
-//         allMarkdownRemark(
-//           sort: { fields: [frontmatter___date], order: DESC }
-//         ) {
-//           nodes {
-//             fields {
-//               slug
-//             }
-//             frontmatter {
-//               title
-//               status
-//             }
-//           }
-//         }
-//       }
-//     `
-//   );
-//
-//   if (result.errors) {
-//     reporter.panicOnBuild(
-//       `There was an error loading your blog posts`,
-//       result.errors
-//     );
-//     return;
-//   }
-//
-//   // Create blog posts pages.
-//   const posts = result.data.allMarkdownRemark.nodes.filter(
-//     (node) => (node.frontmatter && node.frontmatter.status === 'public')
-//   );
-//   // const totalCount = result.data.allMarkdownRemark.totalCount
-//   const totalCount = posts.length;
-//   const postsPerPage = 10;
-//   const numPages = Math.ceil(totalCount / postsPerPage);
-//
-//   for (let i = 0; i < numPages; ++i) {
-//     createPage({
-//       path: i === 0 ? `/pages` : `/pages/${i + 1}`,
-//       component: path.resolve('./src/templates/blog-list.js'),
-//       context: {
-//         limit: postsPerPage,
-//         skip: i * postsPerPage,
-//         numPages,
-//         currentPage: i + 1,
-//       },
-//     });
-//   }
-//
-//   // Create blog posts pages
-//   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-//   // `context` is available in the template as a prop and as a variable in GraphQL
-//
-//   if (posts.length > 0) {
-//     posts.forEach((post, index) => {
-//       const previousPostId = index === 0 ? null : posts[index - 1].id;
-//       const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id;
-//
-//       createPage({
-//         path: post.fields.slug,
-//         component: blogPost,
-//         context: {
-//           id: post.id,
-//           previousPostId,
-//           nextPostId,
-//         },
-//       });
-//     });
-//   }
-// };
-//
-// exports.onCreateNode = ({ node, actions, getNode }) => {
-//   const { createNodeField } = actions;
-//
-//   if (node.internal.type === `MarkdownRemark`) {
-//     const value = createFilePath({ node, getNode });
-//
-//     createNodeField({
-//       name: `slug`,
-//       node,
-//       value,
-//     });
-//   }
-// };
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions;
+
+  // Define a template for blog post
+  const blogPost = path.resolve(`./src/templates/blog-post.tsx`);
+
+  // Get all markdown blog posts sorted by date
+  const result = await graphql(
+    `
+      {
+        allMdx(
+          sort: {fields: frontmatter___date, order: DESC}
+        ) {
+          nodes {
+            frontmatter {
+              title
+              status
+            }
+            id
+            slug
+          }
+        }
+      }
+    `
+  );
+
+  if (result.errors) {
+    reporter.panicOnBuild(
+      `There was an error loading your blog posts`,
+      result.errors
+    );
+    return;
+  }
+
+  // Create blog posts pages.
+  // const posts = result.data.allMdx.nodes.filter(
+  //   (node) => (node.frontmatter && node.frontmatter.status === 'public')
+  // );
+  const posts = result.data.allMdx.nodes.filter(
+    (node) => (node.frontmatter && node.frontmatter.status === 'public')
+  );
+
+  // const totalCount = result.data.allMarkdownRemark.totalCount
+  // const totalCount = posts.length;
+  // const postsPerPage = 10;
+  // const numPages = Math.ceil(totalCount / postsPerPage);
+  //
+  // for (let i = 0; i < numPages; ++i) {
+  //   createPage({
+  //     path: i === 0 ? `/pages` : `/pages/${i + 1}`,
+  //     component: path.resolve('./src/templates/blog-list.js'),
+  //     context: {
+  //       limit: postsPerPage,
+  //       skip: i * postsPerPage,
+  //       numPages,
+  //       currentPage: i + 1,
+  //     },
+  //   });
+  // }
+
+  // Create blog posts pages
+  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
+  // `context` is available in the template as a prop and as a variable in GraphQL
+
+  if (posts.length > 0) {
+    posts.forEach((post, index) => {
+      const previousPost = index === 0 ? null : posts[index - 1];
+      const nextPost = index === posts.length - 1 ? null : posts[index + 1];
+
+      createPage({
+        path: post.slug,
+        component: blogPost,
+        context: {
+          id: post.id,
+          previousPost,
+          nextPost,
+        },
+      });
+    });
+  }
+};
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions;
+
+  if (node.internal.type === `Mdx`) {
+    const value = createFilePath({ node, getNode });
+
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    });
+  }
+};
 
 // exports.createSchemaCustomization = ({ actions }) => {
 //   const { createTypes } = actions;

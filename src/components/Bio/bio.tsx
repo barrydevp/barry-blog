@@ -20,7 +20,7 @@ const AuthorDescription = ({ siteMetaData }) => {
 
   return (
     <p>
-      <strong>{author}</strong> - <strong>{(new Date()).getFullYear() - (new Date(birthday)).getFullYear()}</strong> years
+      <strong className="text-purple-600 dark:text-purple-300">{author}</strong> - <strong className="text-yellow-500">{(new Date()).getFullYear() - (new Date(birthday)).getFullYear()}</strong> years
       old, student at University of Engineering & Technology.
       {` `}
     </p>
@@ -36,7 +36,7 @@ const SocialDetail = ({ siteMetaData }) => {
       const _social = Object.assign({ icon: <SocialIcon style={{ fontSize: '20px' }}/> }, social);
 
       return (
-        <Social social={_social}/>
+        <Social key={social.name} social={_social}/>
       );
     })
   ), [socials]);

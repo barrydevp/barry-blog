@@ -1,5 +1,5 @@
 ---
-status: private
+status: public
 title: Mình đã vật lộn với Gatsby như thế nào?
 date: "2019-12-05T20:46:37.121Z"
 ---

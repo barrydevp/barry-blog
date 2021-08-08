@@ -1,7 +1,7 @@
 import ListPost from './list';
-
-export default ListPost;
+import Article from './article';
 
 export {
-  ListPost
+  ListPost,
+  Article,
 };

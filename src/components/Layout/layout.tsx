@@ -53,7 +53,8 @@ const HeaderTitle = ({ pathName, title }: HeaderTitleProps) => {
     return (
       <h1>
         <Link to={'/'}>
-          {title}
+          <span className="text-pink-500">{title.substr(0, 4)}</span>
+          {title.substr(4)}
         </Link>
       </h1>
     );
@@ -62,7 +63,8 @@ const HeaderTitle = ({ pathName, title }: HeaderTitleProps) => {
   return (
     <h3 className="text-3xl">
       <Link to={'/'}>
-        {title}
+        <span className="text-pink-400 font-black">{title.substr(0, 4)}</span>
+        {title.substr(4)}
       </Link>
     </h3>
   );

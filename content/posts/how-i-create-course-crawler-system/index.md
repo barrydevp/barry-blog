@@ -3,9 +3,6 @@ status: public
 title: Mình đã tạo ra hệ thống crawler courses-uet như thế nào?
 date: "2020-02-24T16:12:03.284Z"
 description: "Mình đã tạo ra hệ thống crawler courses-uet như thế nào?"
-embeddedImagesLocal:
-- data.jpg
-- flow-work-courses.jpg
 ---
 
 ## Mở đầu

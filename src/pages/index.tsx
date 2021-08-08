@@ -30,6 +30,7 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
+      filter: {frontmatter: {status: {eq: "public"}}}
       skip: 0
       limit: 20
       sort: {fields: frontmatter___date, order: DESC}
