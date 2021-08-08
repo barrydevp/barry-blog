@@ -6,19 +6,20 @@ const base = clsx(
 );
 
 const bounded = clsx(
-  'px-4 py-8 max-w-3xl mx-auto sm:px-6 sm:py-12 lg:max-w-4xl lg:py-16 lg:px-8 xl:max-w-6xl'
+  'max-w-3xl mx-auto px-6 xl:max-w-5xl xl:px-0',
 );
 
 const header = clsx(
-  'flex items-center justify-between font-bold text-5xl mb-12'
+  'flex items-center justify-between font-bold text-5xl py-10'
 );
 
 const main = clsx(
-  'my-1'
+  'py-2',
+  'divide-y divide-gray-600'
 );
 
 const footer = clsx(
-  'mt-8'
+  'py-6'
 );
 
 export default {

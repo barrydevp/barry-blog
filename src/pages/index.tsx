@@ -5,9 +5,7 @@ import { useState } from 'react';
 import Layout from '../components/Layout';
 import SEO from '../components/Seo';
 import Bio from '../components/Bio';
-import { Post } from '../components/Post';
-
-import { formatPostDate, formatReadingTime } from '../utils/helpers';
+import { ListPost } from '../components/Post';
 
 const IndexPage = ({ location, data }) => {
   const { site, allMdx } = data;
@@ -17,13 +15,7 @@ const IndexPage = ({ location, data }) => {
     <Layout location={location} title={title}>
       <SEO title={title}/>
       <Bio/>
-      {
-        allMdx.nodes.map((node) => {
-          return (
-            <Post key={node.id} post={node} />
-          );
-        })
-      }
+      <ListPost posts={allMdx.nodes}/>
     </Layout>
   );
 };

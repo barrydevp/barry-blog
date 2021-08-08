@@ -14,7 +14,8 @@ import moon from '../../../content/assets/moon.png';
 export interface LayoutProps {
   location: Location,
   title: string,
-  children?: React.ReactElement | React.ReactElement[]
+  children?: React.ReactElement | React.ReactElement[],
+  hiddenHeader?: boolean,
 }
 
 interface ThemeModeProps {
@@ -67,8 +68,7 @@ const HeaderTitle = ({ pathName, title }: HeaderTitleProps) => {
   );
 };
 
-
-const Layout = ({ title, children, location }: LayoutProps) => {
+const Layout = ({ title, children, location, hiddenHeader }: LayoutProps) => {
   // @ts-ignore
   const [theme, setTheme] = useState(window.__theme);
 
@@ -80,30 +80,35 @@ const Layout = ({ title, children, location }: LayoutProps) => {
     };
   }, []);
 
+  const renderHeader = !hiddenHeader && (
+    <div className={styles.bounded}>
+      <header className={styles.header}>
+        <HeaderTitle pathName={location.pathname} title={title}/>
+        {theme !== null ? (
+          <ThemeModeToggle
+            theme={theme}
+            changeTheme={() => {
+              // @ts-ignore
+              window.__setPreferredTheme(
+                theme === 'dark' ? 'light' : 'dark'
+              );
+            }
+            }
+          />
+        ) : (
+          <div style={{ height: '24px' }}/>
+        )}
+      </header>
+    </div>
+  );
 
   return (
     <div className={styles.base}>
-      <div
-        className={styles.bounded}
-      >
-        <header className={styles.header}>
-          <HeaderTitle pathName={location.pathname} title={title}/>
-          {theme !== null ? (
-            <ThemeModeToggle
-              theme={theme}
-              changeTheme={() => {
-                // @ts-ignore
-                window.__setPreferredTheme(
-                  theme === 'dark' ? 'light' : 'dark'
-                );
-              }
-              }
-            />
-          ) : (
-            <div style={{ height: '24px' }}/>
-          )}
-        </header>
+      {renderHeader}
+      <div className={styles.bounded}>
         <main className={styles.main}>{children}</main>
+      </div>
+      <div className={styles.bounded}>
         <footer className={styles.footer}>
           © {new Date().getFullYear()}, barry
           {` `}

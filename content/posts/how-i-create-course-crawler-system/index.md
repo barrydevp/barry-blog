@@ -3,6 +3,9 @@ status: public
 title: Mình đã tạo ra hệ thống crawler courses-uet như thế nào?
 date: "2020-02-24T16:12:03.284Z"
 description: "Mình đã tạo ra hệ thống crawler courses-uet như thế nào?"
+embeddedImagesLocal:
+- data.jpg
+- flow-work-courses.jpg
 ---
 
 ## Mở đầu
@@ -32,7 +35,7 @@ May thay đúng vào cuối tuần 2 ngày t7, cn được nghỉ mình có th�
 ![](./data.jpg)
 Rất hào hứng khi đứa con tinh thần có thể bắt đầu hoạt động, sau đó hoạt động được khoảng vài giờ thì gặp một vài bug trong các lần crawler khác nhau ở các Quiz, mình lại tu sửa và nâng cấp và hoàn thành hơn con API để monitor con bot đó. Lúc đó mình lại nhận thấy rằng liệu con bot chạy nhanh như này thì có ăn đòn k nhỉ, 1 lần chạy mất có 1,2 phút mà cả Quiz Max là 20 phút lận từ đó bắt đầu thêm timeout để chạy chậm đi 1 Quiz sẽ làm khoảng 10 phút, dần dần mình nghĩ ra nhiều thứ để phát triển hơn và quyết định viết Blog này.
 
-## Định hướng phát triển tiếp
+## Nâng cấp
 Mình viết blog này khi con bot đang hoạt động ở version đầu tiên, sau 2 ngày bắt đầu phát triển, dù cũng khá đủ chức năng và cho đến giờ đã thu đc 337 questions trong 11 bài test (có vẻ quỹ câu hỏi của trường hơi ít và lặp lại nhiều qua các bài test thì phải @@). Tiến tới mình sẽ không chỉ crawler = bot nữa mà sau khi chia sẻ bài này mình sẽ phát triển hệ thống crawler = tay và các bạn hoàn toàn có thể tự crawler được chỉ cần thông qua 1 link đáp án và sessionId để bot truy cập vào là được không có động gì vào tài khoản các bạn đâu. Bởi vì có những course không giống course này tức là chỉ có nhưng bài kiểm tra định kỳ và đc làm 1 lần vì vậy mà bot k thể crawler đc mà phải nhờ vào các link đáp án của các bạn để có thể tổng hợp được nhiều question hơn thì quỹ câu hỏi để các bạn search cũng sẽ rộng hơn.
 Up comming: 
 - web app UI
@@ -40,5 +43,5 @@ Up comming:
 - export, import
 Ngoài ra mình sẽ thử sử dụng phương án thứ nhất để crawler tức là sẽ chỉ sử dụng các request để crawler và không phụ thuộc vào headless nữa sẽ giúp tăng hiệu năng và giảm chi phí tài nguyên, headless khá nặng vì phải có hỗ trợ của 1 nhân chrominum để chạy, và khi deploy và run trên docker khá khó khăn.
 
-## Kết thúc
+## Tổng kết
 Mục đích tạo ra không phải vì mục đích xấu =)), mình chỉ muốn giúp các bạn có 1 đề cương hoàn chỉnh để ôn tập đạt điểm cao mà thôi. Nhưng đừng public rộng quá đến tai các thầy cô thì mình đi đời đó :))
