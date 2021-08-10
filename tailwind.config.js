@@ -71,7 +71,7 @@ const typographyExtend = (theme) => {
     DEFAULT: {
       css: [
         {
-          maxWidth: '95ch',
+          maxWidth: '108ch',
           h3: {
             a: {
               fontWeight: '700'
