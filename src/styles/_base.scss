@@ -36,4 +36,9 @@ main .prose {
     .token.class-name {
         color: #ffa657;
     }
+
+    :not(pre) > code[class*="language-"], pre[class*="language-"] {
+        color: #c9d1d9;
+        background-color: #0d1117;
+    }
 }
