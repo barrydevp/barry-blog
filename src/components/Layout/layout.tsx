@@ -76,6 +76,8 @@ const Layout = ({ title, children, location, hiddenHeader }: LayoutProps) => {
 
   useEffect(() => {
     // @ts-ignore
+    setTheme(window.__theme);
+    // @ts-ignore
     window.__onThemeChange = () => {
       // @ts-ignore
       setTheme(window.__theme);
