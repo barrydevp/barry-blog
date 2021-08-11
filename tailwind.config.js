@@ -81,31 +81,31 @@ const typographyExtend = (theme) => {
             color: '#c9d1d9',
             backgroundColor: '#0d1117',
           },
-          '.prose code': {
+          'code': {
             color: '#c9d1d9',
           },
-          '.prose a code': {
+          'a code': {
             color: '#c9d1d9',
           },
-          '.prose pre': {
+          'pre': {
             color: '#c9d1d9',
             backgroundColor: '#0d1117',
           },
-          '.token.atrule, .token.attr-value, .token.keyword': {
-            color: '#ff7b72'
-          },
-          '.token.punctuation, .token.parameter': {
-            color: '#c9d1d9',
-          },
-          '.token.operator': {
-            color: '#79c0ff'
-          },
-          '.token.function': {
-            color: '#d2a8ff'
-          },
-          '.token.class-name': {
-            color: '#ffa657'
-          },
+          // '.token.atrule, .token.attr-value, .token.keyword': {
+          //   color: '#ff7b72'
+          // },
+          // '.token.punctuation, .token.parameter': {
+          //   color: '#c9d1d9',
+          // },
+          // '.token.operator': {
+          //   color: '#79c0ff'
+          // },
+          // '.token.function': {
+          //   color: '#d2a8ff'
+          // },
+          // '.token.class-name': {
+          //   color: '#ffa657'
+          // },
         }
       ]
     },

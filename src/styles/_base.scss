@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+main .prose {
+    code {
+        color: #c9d1d9;
+    }
+
+    a code {
+        color: #c9d1d9;
+    }
+
+    pre {
+        color: #c9d1d9;
+        background-color: #0d1117;
+    }
+
+    .token.atrule, .token.attr-value, .token.keyword {
+        color: #ff7b72;
+    }
+
+    .token.punctuation, .token.parameter {
+        color: #c9d1d9;
+    }
+
+    .token.operator {
+        color: #79c0ff;
+    }
+
+    .token.function {
+        color: #d2a8ff;
+    }
+
+    .token.class-name {
+        color: #ffa657;
+    }
+}
