@@ -72,7 +72,7 @@ const HeaderTitle = ({ pathName, title }: HeaderTitleProps) => {
 
 const Layout = ({ title, children, location, hiddenHeader }: LayoutProps) => {
   // @ts-ignore
-  const [theme, setTheme] = useState(window.__theme);
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     // @ts-ignore
