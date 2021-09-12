@@ -13,9 +13,9 @@ const IndexPage = ({ location, data }) => {
 
   return (
     <Layout location={location} title={title}>
-      <SEO title={title}/>
-      <Bio/>
-      <ListPost posts={allMdx.nodes}/>
+      <SEO title={title} />
+      <Bio />
+      <ListPost posts={allMdx.nodes} />
     </Layout>
   );
 };
@@ -30,7 +30,7 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-      filter: {frontmatter: {status: {eq: "public"}}}
+      filter: {frontmatter: {status: {eq: "published"}}}
       skip: 0
       limit: 20
       sort: {fields: frontmatter___date, order: DESC}

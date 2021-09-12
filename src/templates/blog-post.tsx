@@ -8,7 +8,7 @@ import { Article } from '../components/Post';
 const BlogPostTemplate = (props) => {
   const { data, location, pageContext } = props;
   const { site, mdx: post } = data;
-  const { nextPost, previousPost } = pageContext;
+  const { series, nextPost, previousPost } = pageContext;
 
   return (
     <Layout location={location} title={site.siteMetadata.title}>
@@ -16,7 +16,7 @@ const BlogPostTemplate = (props) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <Article post={post} nextPost={nextPost} previousPost={previousPost}/>
+      <Article series={series} post={post} nextPost={nextPost} previousPost={previousPost} />
     </Layout>
   );
 };
@@ -38,7 +38,10 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        series
+        series_index
       }
+      slug
     }
   }
 `;

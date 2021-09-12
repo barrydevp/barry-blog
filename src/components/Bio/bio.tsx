@@ -33,10 +33,10 @@ const SocialDetail = ({ siteMetaData }) => {
   const displaySocial = useMemo(() => (
     socials.map((social) => {
       const SocialIcon = SOCIAL_ICON_MAP[social.name];
-      const _social = Object.assign({ icon: <SocialIcon style={{ fontSize: '20px' }}/> }, social);
+      const _social = Object.assign({ icon: <SocialIcon style={{ fontSize: '20px' }} /> }, social);
 
       return (
-        <Social key={social.name} social={_social}/>
+        <Social key={social.name} social={_social} />
       );
     })
   ), [socials]);
@@ -104,8 +104,8 @@ const Bio = () => {
         }}
       />
       <div className="ml-2 md:ml-4">
-        <AuthorDescription siteMetaData={siteMetadata}/>
-        <SocialDetail siteMetaData={siteMetadata}/>
+        <AuthorDescription siteMetaData={siteMetadata} />
+        <SocialDetail siteMetaData={siteMetadata} />
       </div>
     </div>
   );

@@ -27,3 +27,4 @@ export const formatPostDate = (date, lang): string => {
 export const normalizeSlug = (slug: string): string => {
   return `/${slug.slice(0, -1)}`
 }
+

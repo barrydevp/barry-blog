@@ -1,12 +1,16 @@
 const path = require(`path`);
+const slugify = require('@sindresorhus/slugify');
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
+const { createPostPage, createSeriesPage } = require('./src/core');
+
+const _getSeriesSlug = (series, postSlug) => {
+  const dirName = path.dirname(postSlug);
+
+  return `${dirName}/series/${slugify(series)}/`;
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
-
-  // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post.tsx`);
-
   // Get all markdown blog posts sorted by date
   const result = await graphql(
     `
@@ -16,8 +20,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         ) {
           nodes {
             frontmatter {
-              title
               status
+              series
+              series_index
+              title
+              date(formatString: "MMMM DD, YYYY")
             }
             id
             slug
@@ -35,12 +42,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
-  // Create blog posts pages.
-  // const posts = result.data.allMdx.nodes.filter(
-  //   (node) => (node.frontmatter && node.frontmatter.status === 'public')
-  // );
+  const seriesDict = {};
+
   const posts = result.data.allMdx.nodes.filter(
-    (node) => (node.frontmatter && node.frontmatter.status === 'public')
+    (node) => {
+      const { status, series, series_index } = Object.assign({}, node.frontmatter);
+      const isPublished = status === 'published';
+
+      if (series && series_index >= 0) {
+        const seriesIndxNum = parseInt(series_index, 10);
+        const seriesSlug = _getSeriesSlug(series, node.slug);
+
+        if (!seriesDict[seriesSlug]) {
+          seriesDict[seriesSlug] = {
+            title: series,
+            posts: [],
+            slug: seriesSlug,
+          }
+        }
+
+        node.seriesSlug = seriesSlug;
+        seriesDict[seriesSlug].posts[seriesIndxNum] = node;
+      }
+
+      return isPublished;
+    }
   );
 
   // const totalCount = result.data.allMarkdownRemark.totalCount
@@ -64,23 +90,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
+  createPostPage(actions, posts, seriesDict);
 
-  if (posts.length > 0) {
-    posts.forEach((post, index) => {
-      const nextPost = index === 0 ? null : posts[index - 1];
-      const previousPost = index === posts.length - 1 ? null : posts[index + 1];
+  createSeriesPage(actions, seriesDict);
 
-      createPage({
-        path: post.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPost,
-          nextPost,
-        },
-      });
-    });
-  }
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
