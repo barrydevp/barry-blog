@@ -5,9 +5,25 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 const { createPostPage, createSeriesPage } = require('./src/core');
 
 const _getSeriesSlug = (series, postSlug) => {
-  const dirName = path.dirname(postSlug);
+  const category = path.dirname(postSlug);
 
-  return `${dirName}/series/${slugify(series)}/`;
+  return `${category}/_series/${slugify(series)}/`;
+}
+
+const _detectSeriesArticle = (node) => {
+  const { frontmatter, slug } = node;
+
+  const { type, series } = frontmatter;
+
+  if (type !== 'series') {
+    return null;
+  }
+
+  const category = path.dirname(slug);
+
+  node.slug = `${category}/${slugify(series)}/`;
+
+  return node;
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -21,6 +37,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           nodes {
             frontmatter {
               status
+              type
               series
               series_index
               title
@@ -46,12 +63,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const posts = result.data.allMdx.nodes.filter(
     (node) => {
-      const { status, series, series_index } = Object.assign({}, node.frontmatter);
+      const { type, status, series, series_index } = Object.assign({}, node.frontmatter);
       const isPublished = status === 'published';
+      const isArticle = type !== 'series';
 
-      if (series && series_index >= 0) {
-        const seriesIndxNum = parseInt(series_index, 10);
-        const seriesSlug = _getSeriesSlug(series, node.slug);
+      if (series) {
+        const seriesArticle = _detectSeriesArticle(node);
+
+        let seriesSlug = '';
+
+        if (seriesArticle) {
+          seriesSlug = seriesArticle.slug;
+        } else {
+          seriesSlug = _getSeriesSlug(series, node.slug);
+        }
 
         if (!seriesDict[seriesSlug]) {
           seriesDict[seriesSlug] = {
@@ -61,11 +86,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
 
-        node.seriesSlug = seriesSlug;
-        seriesDict[seriesSlug].posts[seriesIndxNum] = node;
+        if (seriesArticle) {
+          seriesDict[seriesSlug].node = node;
+        }
+
+        if (series_index >= 0) {
+          const seriesIndxNum = parseInt(series_index, 10);
+
+          node.seriesSlug = seriesSlug;
+          seriesDict[seriesSlug].posts[seriesIndxNum] = node;
+        }
+
       }
 
-      return isPublished;
+      return isPublished && isArticle;
     }
   );
 
@@ -146,3 +180,4 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 //     }
 //   `);
 // };
+

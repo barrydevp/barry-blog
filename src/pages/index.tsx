@@ -30,7 +30,7 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-      filter: {frontmatter: {status: {eq: "published"}}}
+      filter: {frontmatter: {status: {eq: "published"}, type: {ne: "series"}}}
       skip: 0
       limit: 20
       sort: {fields: frontmatter___date, order: DESC}
@@ -49,3 +49,4 @@ export const pageQuery = graphql`
     }
   }
 `;
+

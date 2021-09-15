@@ -17,6 +17,7 @@ module.exports = (actions, seriesDict) => {
         path: seriesSlug,
         component: BlogSeriesTemplate,
         context: {
+          id: currentSeries.node && currentSeries.node.id || null,
           currentSeries,
           previousSeries,
           nextSeries,

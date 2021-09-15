@@ -1,24 +1,44 @@
 import * as React from 'react';
 
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { normalizeSlug } from '../../utils/helpers';
 
 import Bio from '../Bio';
 import { Header, NavFooter } from './article'
-import { graphql, Link, useStaticQuery } from 'gatsby';
+import { Link } from 'gatsby';
 import { DislikeFilled, FileTextFilled, LikeFilled } from '@ant-design/icons';
 
-const SeriesContent = ({ series }) => {
-  const { title, slug, posts } = series;
+const DefaultSeriesDescription = ({ series }) => {
+  const { title } = series;
 
   return (
     <>
-      <h1>Overview</h1>
       <p>&nbsp;&nbsp;{title}</p>
       <p>&nbsp;&nbsp;</p>
       <p>&nbsp;&nbsp;</p>
       <p>&nbsp;&nbsp;</p>
       <h1>Content</h1>
-      <h2>List Post</h2>
+      <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
+      <h1>References</h1>
+      <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
+    </>
+  )
+}
+
+const SeriesContent = ({ series }) => {
+  const { posts, article } = series;
+
+  return (
+    <>
+      <h1>Overview</h1>
+      {article && <MDXRenderer>{article.body}</MDXRenderer> || <DefaultSeriesDescription series={series} />}
+      <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
+      <h1>List Post</h1>
       <ul>
         {
           posts.map((post, index) => {
@@ -35,12 +55,6 @@ const SeriesContent = ({ series }) => {
           })
         }
       </ul>
-      <p>&nbsp;&nbsp;</p>
-      <p>&nbsp;&nbsp;</p>
-      <h1>References</h1>
-      <p>&nbsp;&nbsp;</p>
-      <p>&nbsp;&nbsp;</p>
-      <p>&nbsp;&nbsp;</p>
     </>
   )
 }

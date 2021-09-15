@@ -130,12 +130,15 @@ export const NavFooter = ({ previous, next }) => {
 };
 
 const SeriesReference = ({ series, curPost }) => {
-  const { posts } = series;
+  const { posts, slug } = series;
 
 
   return (
     <>
-      <h1 className="pt-8">Another post in this series</h1>
+      <h1 className="pt-8">Another post in this&nbsp;
+        <Link className="transition-colors duration-200 hover:text-yellow-500"
+          to={normalizeSlug(slug)} rel="next" >series</Link>
+      </h1>
       <ul>
         {
           posts.map((post, index) => {
@@ -177,3 +180,4 @@ const Article = ({ series, post, nextPost, previousPost }) => {
 };
 
 export default Article;
+

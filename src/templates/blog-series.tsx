@@ -7,8 +7,9 @@ import { Series } from '../components/Post';
 
 const BlogSeriesTemplate = (props) => {
   const { data, location, pageContext } = props;
-  const { site } = data;
+  const { site, mdx } = data;
   const { currentSeries, nextSeries, previousSeries } = pageContext;
+  currentSeries.article = mdx
 
   return (
     <Layout location={location} title={site.siteMetadata.title}>
@@ -24,10 +25,20 @@ const BlogSeriesTemplate = (props) => {
 export default BlogSeriesTemplate;
 
 export const pageQuery = graphql`
-  query {
+  query SeriesWithSiteById($id: String) {
     site {
       siteMetadata {
         title
+      }
+    }
+    mdx(id: { eq: $id }) {
+      id
+      body
+      frontmatter {
+        title
+        date(formatString: "MMMM DD, YYYY")
+        description
+        series
       }
     }
   }
