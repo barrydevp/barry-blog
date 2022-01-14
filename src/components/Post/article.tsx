@@ -9,7 +9,7 @@ import { graphql, Link, useStaticQuery } from 'gatsby';
 export const Author = ({ name, avatar, tagging, link }) => {
   return (
     <li className="flex items-center space-x-2">
-      <img src={avatar} alt="" className="w-10 h-10 rounded-full" />
+      <img src={avatar} alt="" className="w-10 h-10 rounded-full"/>
       <dl className="text-sm font-medium whitespace-no-wrap">
         <dt className="sr-only">Name</dt>
         <dd className="">{name}</dd>
@@ -32,6 +32,7 @@ export const gatsbyAuthor = {
 }
 
 const HeaderPostTitle = ({ series, post }) => {
+  const seriesNode = series.node
   return (
     <>
       <dl className="space-y-10">
@@ -48,13 +49,13 @@ const HeaderPostTitle = ({ series, post }) => {
           {post.frontmatter.title}
         </h1>
       </div>
-      {series && (
+      {seriesNode && (
         <div>
           <dt className="sr-only">Series</dt>
           <dd className="text-lg leading-6 font-medium">
             Part {post.frontmatter.series_index + 1} of series <Link
-              className="transition-colors duration-200 text-purple-400 hover:text-purple-500"
-              to={normalizeSlug(series.slug)}>{series.title}</Link>.
+            className="transition-colors duration-200 text-purple-400 hover:text-purple-500"
+            to={normalizeSlug(seriesNode.slug)}>{seriesNode.frontmatter.title}</Link>.
           </dd>
         </div>
       )}
@@ -112,7 +113,7 @@ export const NavFooter = ({ previous, next }) => {
       <li className="flex mr-8">
         {previous && (
           <Link className="transition-colors duration-200 hover:text-gray-900 dark:hover:text-blue-500"
-            to={normalizeSlug(previous.slug)} rel="prev">
+                to={normalizeSlug(previous.slug)} rel="prev">
             <span aria-hidden="true" className="mr-2">←</span> {previous.title || previous.frontmatter.title}
           </Link>
         )}
@@ -120,7 +121,7 @@ export const NavFooter = ({ previous, next }) => {
       <li className="flex text-right ml-auto">
         {next && (
           <Link className="transition-colors duration-200 hover:text-gray-900 dark:hover:text-blue-500"
-            to={normalizeSlug(next.slug)} rel="next">
+                to={normalizeSlug(next.slug)} rel="next">
             {next.title || next.frontmatter.title} <span aria-hidden="true" className="ml-2">→</span>
           </Link>
         )}
@@ -130,14 +131,13 @@ export const NavFooter = ({ previous, next }) => {
 };
 
 const SeriesReference = ({ series, curPost }) => {
-  const { posts, slug } = series;
-
+  const { posts, node } = series;
 
   return (
     <>
       <h1 className="pt-8">Another post in this&nbsp;
         <Link className="transition-colors duration-200 hover:text-yellow-500"
-          to={normalizeSlug(slug)} rel="next" >series</Link>
+              to={normalizeSlug(node.slug)} rel="next">series</Link>
       </h1>
       <ul>
         {
@@ -145,9 +145,11 @@ const SeriesReference = ({ series, curPost }) => {
             return (
               <li key={index}>
                 {post.slug === curPost.slug &&
-                  <p><span aria-hidden="true" className="text-xl mr-2 text-yellow-500">→</span>{post.frontmatter.title}</p> ||
-                  <Link className="transition-colors duration-200 hover:text-gray-900 dark:hover:text-blue-500"
-                    to={normalizeSlug(post.slug)} rel="next" >{post.frontmatter.title}</Link>}
+                <p>
+                  <span aria-hidden="true" className="text-xl mr-2 text-yellow-500">→</span>{post.frontmatter.title}
+                </p> ||
+                <Link className="transition-colors duration-200 hover:text-gray-900 dark:hover:text-blue-500"
+                      to={normalizeSlug(post.slug)} rel="next">{post.frontmatter.title}</Link>}
               </li>
             )
           })
@@ -160,20 +162,20 @@ const SeriesReference = ({ series, curPost }) => {
 const Article = ({ series, post, nextPost, previousPost }) => {
   const renderTitle = (data) => {
     return (
-      <HeaderPostTitle post={data} series={series} />
+      <HeaderPostTitle post={data} series={series}/>
     )
   }
 
   return (
     <article className="divide-y divide-gray-600">
-      <Header data={post} renderTitle={renderTitle} />
+      <Header data={post} renderTitle={renderTitle}/>
       <main className="prose dark:prose-dark py-10 pb-8">
         <MDXRenderer>{post.body}</MDXRenderer>
-        {series && <SeriesReference series={series} curPost={post} />}
+        {series && <SeriesReference series={series} curPost={post}/>}
       </main>
       <footer className="pt-8">
-        <Bio />
-        <NavFooter next={nextPost} previous={previousPost} />
+        <Bio/>
+        <NavFooter next={nextPost} previous={previousPost}/>
       </footer>
     </article>
   );

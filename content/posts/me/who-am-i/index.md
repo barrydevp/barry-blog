@@ -1,6 +1,6 @@
 ---
 status: published
-series: Story of my life
+series: /me/_series/story-of-my-life
 series_index: 0
 title: Mình là ai?
 date: "2019-12-05T16:12:03.284Z"

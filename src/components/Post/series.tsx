@@ -33,7 +33,6 @@ const SeriesContent = ({ series }) => {
 
   return (
     <>
-      <h1>Overview</h1>
       {article && <MDXRenderer>{article.body}</MDXRenderer> || <DefaultSeriesDescription series={series} />}
       <p>&nbsp;&nbsp;</p>
       <p>&nbsp;&nbsp;</p>
@@ -111,7 +110,7 @@ const Series = ({ series, nextSeries, previousSeries }) => {
       </main>
       <footer className="pt-8">
         <Bio />
-        <NavFooter next={nextSeries} previous={previousSeries} />
+        <NavFooter next={nextSeries && nextSeries.node} previous={previousSeries && previousSeries.node} />
       </footer>
     </article>
   );

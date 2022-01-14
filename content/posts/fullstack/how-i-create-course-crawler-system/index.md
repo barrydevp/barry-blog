@@ -1,7 +1,5 @@
 ---
 status: published
-series: Uet courses crawler
-series_index: 0
 title: Mình đã tạo ra hệ thống crawler courses-uet như thế nào?
 date: "2020-02-24T16:12:03.284Z"
 description: "Mình đã tạo ra hệ thống crawler courses-uet như thế nào?"

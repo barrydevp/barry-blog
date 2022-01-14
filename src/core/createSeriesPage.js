@@ -4,17 +4,17 @@ const BlogSeriesTemplate = path.resolve(`./src/templates/blog-series.tsx`);
 module.exports = (actions, seriesDict) => {
   const { createPage } = actions;
 
-  const seriesSlugs = Object.keys(seriesDict);
+  const series = Object.keys(seriesDict);
 
-  if (seriesSlugs.length > 0) {
-    seriesSlugs.forEach((seriesSlug, index) => {
-      const currentSeries = seriesDict[seriesSlug];
+  if (series.length > 0) {
+    series.forEach((_series, index) => {
+      const currentSeries = seriesDict[_series];
 
-      const nextSeries = index === 0 ? null : seriesDict[seriesSlugs[index - 1]];
-      const previousSeries = index === seriesSlugs.length - 1 ? null : seriesDict[seriesSlugs[index + 1]];
+      const nextSeries = index === 0 ? null : seriesDict[series[index - 1]];
+      const previousSeries = index === series.length - 1 ? null : seriesDict[series[index + 1]];
 
       createPage({
-        path: seriesSlug,
+        path: _series,
         component: BlogSeriesTemplate,
         context: {
           id: currentSeries.node && currentSeries.node.id || null,

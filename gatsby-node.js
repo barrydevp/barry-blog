@@ -1,8 +1,8 @@
 const path = require(`path`);
 const slugify = require('@sindresorhus/slugify');
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const {createFilePath} = require(`gatsby-source-filesystem`);
 
-const { createPostPage, createSeriesPage } = require('./src/core');
+const {createPostPage, createSeriesPage} = require('./src/core');
 
 const _getSeriesSlug = (series, postSlug) => {
   const category = path.dirname(postSlug);
@@ -10,10 +10,14 @@ const _getSeriesSlug = (series, postSlug) => {
   return `${category}/_series/${slugify(series)}/`;
 }
 
-const _detectSeriesArticle = (node) => {
-  const { frontmatter, slug } = node;
+const _isSeries = (node) => {
+  return node && node.slug && node.slug.includes('/_series/')
+}
 
-  const { type, series } = frontmatter;
+const _detectSeriesArticle = (node) => {
+  const {frontmatter, slug} = node;
+
+  const {type, series} = frontmatter;
 
   if (type !== 'series') {
     return null;
@@ -26,7 +30,7 @@ const _detectSeriesArticle = (node) => {
   return node;
 }
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({graphql, actions, reporter}) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(
     `
@@ -63,43 +67,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const posts = result.data.allMdx.nodes.filter(
     (node) => {
-      const { type, status, series, series_index } = Object.assign({}, node.frontmatter);
+      const {frontmatter, slug} = node
+      const {status, series, series_index} = Object.assign({}, frontmatter);
       const isPublished = status === 'published';
-      const isArticle = type !== 'series';
+      const isSeries = _isSeries(node);
 
       if (series) {
-        const seriesArticle = _detectSeriesArticle(node);
-
-        let seriesSlug = '';
-
-        if (seriesArticle) {
-          seriesSlug = seriesArticle.slug;
-        } else {
-          seriesSlug = _getSeriesSlug(series, node.slug);
-        }
-
-        if (!seriesDict[seriesSlug]) {
-          seriesDict[seriesSlug] = {
-            title: series,
+        if (!seriesDict[series]) {
+          seriesDict[series] = {
             posts: [],
-            slug: seriesSlug,
           }
         }
 
-        if (seriesArticle) {
-          seriesDict[seriesSlug].node = node;
+        if (isSeries) {
+          // if the node is the series
+          seriesDict[series].node = node;
+        } else {
+          // else the node is the post of series
+          if (series_index >= 0) {
+            const seriesIndxNum = parseInt(series_index, 10);
+            seriesDict[series].posts[seriesIndxNum] = node;
+          }
         }
-
-        if (series_index >= 0) {
-          const seriesIndxNum = parseInt(series_index, 10);
-
-          node.seriesSlug = seriesSlug;
-          seriesDict[seriesSlug].posts[seriesIndxNum] = node;
-        }
-
       }
 
-      return isPublished && isArticle;
+      return isPublished && !isSeries;
     }
   );
 
@@ -130,11 +122,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 };
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions;
 
   if (node.internal.type === `Mdx`) {
-    const value = createFilePath({ node, getNode });
+    const value = createFilePath({node, getNode});
 
     createNodeField({
       name: `slug`,

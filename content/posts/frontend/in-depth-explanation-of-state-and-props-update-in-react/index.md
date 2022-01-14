@@ -1,6 +1,6 @@
 ---
 status: published
-series: Inside React Fiber
+series: /frontend/_series/inside-react-fiber
 series_index: 0
 title: Cùng đi sâu vào quá trình react update state và props
 date: "2019-12-07T16:46:37.121Z"
