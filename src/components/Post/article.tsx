@@ -32,7 +32,7 @@ export const gatsbyAuthor = {
 }
 
 const HeaderPostTitle = ({ series, post }) => {
-  const seriesNode = series.node
+  const seriesNode = series && series.node
   return (
     <>
       <dl className="space-y-10">
